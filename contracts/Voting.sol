@@ -16,9 +16,15 @@ contract Voting {
     Proposal[] public proposals;
 
     // constructor() {}
+    modifier nonEmptyString(string memory str) {
+        require(bytes(str).length > 0, "String cannot be empty");
+        _;
+    }
 
     function addProposal(string memory _title, string memory _description)
         public
+        nonEmptyString(_title)
+        nonEmptyString(_description)
     {
         Proposal memory newProposal = Proposal({
             id: uint256(proposals.length),
